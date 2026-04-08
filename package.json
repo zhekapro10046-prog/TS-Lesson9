@@ -1,5 +1,27 @@
 {
   "dependencies": {
-    "@types/node": "^25.5.2"
-  }
+    "@types/node": "^25.5.2",
+    "help": "^3.0.2"
+  },
+  "name": "lesson9",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+  "start": "node dist/homework.js"
+}
+,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhekapro10046-prog/TS-Lesson9.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/zhekapro10046-prog/TS-Lesson9/issues"
+  },
+  "homepage": "https://github.com/zhekapro10046-prog/TS-Lesson9#readme"
 }

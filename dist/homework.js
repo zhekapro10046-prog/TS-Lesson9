@@ -9,17 +9,19 @@ class NoDiscount {
 class BlackFridayDiscount {
     discountPercent = 50;
     applyDiscount(amount) {
-        const discountAmount = amount * (1 * this.discountPercent / 100);
+        const discountFactor = 1 - (this.discountPercent / 100);
+        const finalAmount = amount * discountFactor;
         console.log(`Скидка на товар на черную пятницу: ${this.discountPercent}%`);
-        return discountAmount;
+        return finalAmount;
     }
 }
 class VipClientDiscount {
     discountPercent = 20;
     applyDiscount(amount) {
-        const discountAmount = amount * (1 * this.discountPercent / 100);
+        const discountFactor = 1 - (this.discountPercent / 100);
+        const finalAmount = amount * discountFactor;
         console.log(`Скидка на товар как VIP-клиенту: ${this.discountPercent}%`);
-        return discountAmount;
+        return finalAmount;
     }
 }
 class Cart {
@@ -31,11 +33,10 @@ class Cart {
         this._strategy = strategy;
     }
     discount(sale) {
-        this._strategy.applyDiscount(sale);
-        return;
+        return this._strategy.applyDiscount(sale);
     }
 }
-const myCart = new Cart(new VipClientDiscount);
-myCart.discount(22222222);
-myCart.setStrategy(new BlackFridayDiscount);
-myCart.discount(22222222222);
+const myCart = new Cart(new VipClientDiscount());
+console.log(myCart.discount(20));
+myCart.setStrategy(new BlackFridayDiscount());
+console.log(myCart.discount(100));

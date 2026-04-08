@@ -1,3 +1,4 @@
+// 1st task
 interface IDiscountStrategy {
     applyDiscount(amount: number): number;
 }
@@ -14,10 +15,11 @@ class BlackFridayDiscount implements IDiscountStrategy {
 
         applyDiscount(amount: number): number {
 
-        const discountAmount = amount * (1 *this.discountPercent / 100);
+        const discountFactor = 1 - (this.discountPercent / 100);
+        const finalAmount = amount * discountFactor;
 
         console.log (`Скидка на товар на черную пятницу: ${this.discountPercent}%`);
-        return discountAmount;
+        return finalAmount;
     }
 }
 
@@ -26,10 +28,11 @@ class VipClientDiscount implements IDiscountStrategy {
 
         applyDiscount(amount: number): number {
             
-        const discountAmount = amount * (1 *this.discountPercent / 100);
+        const discountFactor = 1 - (this.discountPercent / 100);
+        const finalAmount = amount * discountFactor;
 
         console.log (`Скидка на товар как VIP-клиенту: ${this.discountPercent}%`);
-        return discountAmount;
+        return finalAmount;
     }
    
 }
@@ -41,16 +44,21 @@ class Cart {
         this._strategy = strategy;
     }
 
-    public discount(sale: number) {
-        this._strategy.applyDiscount(sale);
-        return;
+    public discount(sale: number):number {
+        return this._strategy.applyDiscount(sale);
+        
     }
 }
 
-const myCart = new Cart (new VipClientDiscount);
+const myCart = new Cart (new VipClientDiscount());
 
-myCart.discount(22222222);
+console.log (myCart.discount(20));
 
-myCart.setStrategy (new BlackFridayDiscount);
+myCart.setStrategy (new BlackFridayDiscount());
 
-myCart.discount(22222222222);
+console.log (myCart.discount(100));
+
+
+
+
+

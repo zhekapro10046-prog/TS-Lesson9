@@ -48,83 +48,83 @@
 
 
 
-// interface ISubscriber {
-//     update(eventName: string, data: any): void;
-// }
+interface ISubscriber {
+    update(eventName: string, data: any): void;
+}
 
-// interface IPublisher {
-//     subscribe(observer: ISubscriber): void;
-//     unsubscribe(observer: ISubscriber): void;
-//     notify(eventName: string, data: any): void;
+interface IPublisher {
+    subscribe(observer: ISubscriber): void;
+    unsubscribe(observer: ISubscriber): void;
+    notify(eventName: string, data: any): void;
 
-// }
+}
 
-// class UserAuthService implements IPublisher {
-//     private _subscribers: ISubscriber[] = [];
+class UserAuthService implements IPublisher {
+    private _subscribers: ISubscriber[] = [];
 
-//     public subscribe(observer: ISubscriber): void {
-//         this._subscribers.push(observer);
-//     }
+    public subscribe(observer: ISubscriber): void {
+        this._subscribers.push(observer);
+    }
 
-//     public unsubscribe(observer: ISubscriber): void {
-//         this._subscribers = this._subscribers.filter((sub) => sub !== observer);
-//     }
+    public unsubscribe(observer: ISubscriber): void {
+        this._subscribers = this._subscribers.filter((sub) => sub !== observer);
+    }
 
-//     public notify(eventName: string, data: any): void {
-//         for (const sub of this._subscribers) {
-//             sub.update(eventName, data);
-//         }
-//     }
+    public notify(eventName: string, data: any): void {
+        for (const sub of this._subscribers) {
+            sub.update(eventName, data);
+        }
+    }
 
-//     public registerUser(username: string) {
-//         console.log(`Регистрирую пользователя: ${username}`);
+    public registerUser(username: string) {
+        console.log(`Регистрирую пользователя: ${username}`);
 
-//         // сохранение в бд
+        // сохранение в бд
         
-//         this.notify('USER_REGISTERED', {username});
-//     }
+        this.notify('USER_REGISTERED', {username});
+    }
 
-// }
-
-
-// class EmailService implements ISubscriber {
-//     update(eventName: string, data: any): void {
-//         if (eventName === 'USER_REGISTERED'){ 
-//             console.log (`Отправляю письмо для: ${data.username}`);
-//         }
-//     }
-// }
-
-// class BonusService implements ISubscriber {
-//     update(eventName: string, data: any): void {
-//         if (eventName === 'USER_REGISTERED'){ 
-//             console.log (`Начисляю бонусы для: ${data.username}`);
-//         }
-//     }
-// }
+}
 
 
-// class LoggerService implements ISubscriber {
-//     update(eventName: string, data: any): void {
-//         if (eventName === 'USER_REGISTERED'){ 
-//             console.log (`Событие ${eventName} с данным:`, data);
-//         }
-//     }
-// }
+class EmailService implements ISubscriber {
+    update(eventName: string, data: any): void {
+        if (eventName === 'USER_REGISTERED'){ 
+            console.log (`Отправляю письмо для: ${data.username}`);
+        }
+    }
+}
 
-// const authService = new UserAuthService();
-
-// const emailService = new EmailService();
-// const bonusService = new BonusService();
-// const logger = new LoggerService();
-
-
-// for (const service of [emailService, bonusService, logger]) {
-//     authService.subscribe(service)
-// }
+class BonusService implements ISubscriber {
+    update(eventName: string, data: any): void {
+        if (eventName === 'USER_REGISTERED'){ 
+            console.log (`Начисляю бонусы для: ${data.username}`);
+        }
+    }
+}
 
 
-// authService.registerUser ('Alexa');
+class LoggerService implements ISubscriber {
+    update(eventName: string, data: any): void {
+        if (eventName === 'USER_REGISTERED'){ 
+            console.log (`Событие ${eventName} с данным:`, data);
+        }
+    }
+}
+
+const authService = new UserAuthService();
+
+const emailService = new EmailService();
+const bonusService = new BonusService();
+const logger = new LoggerService();
+
+
+for (const service of [emailService, bonusService, logger]) {
+    authService.subscribe(service)
+}
+
+
+authService.registerUser ('Alexa');
 
 import { EventEmitter } from "events";
 
